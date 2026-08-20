@@ -1,11 +1,6 @@
 print('== Unit Converter Program==')
 
-option = 0
-
-validNumbers = [1, 2, 3, 4, 5, 6, 7]
-
-while True:
-
+def display_menu():
     print('1. Kilometers to Miles')
     print('2. Miles to Kilometers')
     print('3. Celsius to Fahrenheit')
@@ -16,6 +11,15 @@ while True:
 
     print('Please select an option (1-7): ')
 
+option = 0
+theNumber = 0
+
+validNumbers = [1, 2, 3, 4, 5, 6, 7]
+
+while True:
+
+    display_menu()
+    
     while True:
         try:
             option = int(input())
@@ -27,39 +31,39 @@ while True:
         print('Invalid number. Please select a number between 1 and 7.')
         continue
 
+    try:
+        theNumber = float(input('Enter the number to convert: '))
+    except ValueError:
+        print('Invalid input. Please enter a valid number.')
+        continue
+
     if(option == 1):
-        print('Enter distance in kilometers: ')
-        km = float(input())
+        km = theNumber
         miles = km * 0.621371
         print(f'{km} kilometers is equal to {miles} miles.')
 
     elif(option == 2):
-        print('Enter distance in miles: ')
-        miles = float(input())
+        miles = theNumber
         km = miles / 0.621371
         print(f'{miles} miles is equal to {km} kilometers.')
 
     elif(option == 3):
-        print('Enter temperature in Celsius: ')
-        celsius = float(input())
+        celsius = theNumber
         fahrenheit = (celsius * 9/5) + 32
         print(f'{celsius}°C is equal to {fahrenheit}°F.')
 
     elif(option == 4):
-        print('Enter temperature in Fahrenheit: ')
-        fahrenheit = float(input())
+        fahrenheit = theNumber
         celsius = (fahrenheit - 32) * 5/9
         print(f'{fahrenheit}°F is equal to {celsius}°C.')
 
     elif(option == 5):
-        print('Enter weight in kilograms: ')
-        kg = float(input())
+        kg = theNumber
         pounds = kg * 2.20462
         print(f'{kg} kilograms is equal to {pounds} pounds.')
 
     elif(option == 6):
-        print('Enter weight in pounds: ')
-        pounds = float(input())
+        pounds = theNumber
         kg = pounds / 2.20462
         print(f'{pounds} pounds is equal to {kg} kilograms.')
 
