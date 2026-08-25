@@ -4,8 +4,6 @@ import json
 from collections import defaultdict
 from datetime import datetime
 
-url1 = "https://raw.githubusercontent.com/SuvraBarua/MathGames/17c07ade7f5488d7253f3527ca2649e51476b3dc/textfile.txt"
-url2 = "https://raw.githubusercontent.com/SuvraBarua/MathGames/17c07ade7f5488d7253f3527ca2649e51477b3dc/textfile.txt"
 url3 = "https://raw.githubusercontent.com/SuvraBarua/MathGames/refs/heads/main/sales_data.json"
 
 record_count = 0
