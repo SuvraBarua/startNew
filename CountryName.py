@@ -56,6 +56,11 @@ def get_country_info(country_name):
 
 # ========== Main program ==========
 name = input("Enter country name: ").strip()
+
+if name == "":
+	print("you did't typed anything")
+	exit(1)
+    
 country = get_country_info(name)
 
 if country:
