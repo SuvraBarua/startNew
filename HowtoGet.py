@@ -77,10 +77,12 @@ try:
     print('--------------------------------------')
 
     # Find the most sold product
-    most_sold_product = max(product_sales, key=product_sales.get)
-
     print('--------------------------------------')
-    print(f"Most Sold Product: {most_sold_product} with {product_sales[most_sold_product]} units sold.")
+    if product_sales:
+        most_sold_product = max(product_sales, key=product_sales.get)
+        print(f"Most Sold Product: {most_sold_product} with {product_sales[most_sold_product]} units sold.")
+    else:
+        print("No product sales data available.")
     print('--------------------------------------')
 
     #Generate sales report by product
@@ -92,7 +94,10 @@ try:
     print('--------------------------------------')
 
     # Find the most profitable product
-    most_profitable_product = max(product_revenue, key=product_revenue.get)
+    if product_revenue:
+        most_profitable_product = max(product_revenue, key=product_revenue.get)
+    else:
+        most_profitable_product = None
 
     #prints the most profitable product
     print('--------------------------------------')
@@ -107,17 +112,17 @@ try:
     print('--------------------------------------')
 
     print('--------------------------------------')
-    print(f"Customer Count: {record_count}")
+    print(f"Records: {record_count}")
     print('--------------------------------------')
 
     print('--------------------------------------')
     print(f"Total Units Sold: {total_quantity}")
     print('--------------------------------------')      
 
-except urllib.error.URLError as e:
-    print("Error fetching URL:", e)
 except urllib.error.HTTPError as e:
     print("HTTP error occurred:", e)
+except urllib.error.URLError as e:
+    print("Error fetching URL:", e)
 except Exception as e:
     print("An unexpected error occurred:", e)
 
