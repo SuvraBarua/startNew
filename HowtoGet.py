@@ -23,15 +23,26 @@ try:
         raw_data = response.read()
         texts = raw_data.decode("utf-8")
 
-        sales_data = json.loads(texts)    
+
+        try:
+            sales_data = json.loads(texts)
+        except json.JSONDecodeError as e:
+            print("Error decoding JSON:", e)
+            exit(1)
 
         print(f"Loaded {len(sales_data)} records from 'sales_data.json'.")
 
         for row in sales_data:
             product = row['product']
-            quantity = int(row['quantity'])
-            price = float(row['price'])
-            date = row['date']
+
+            try:
+                quantity = int(row['quantity'])
+                price = float(row['price'])
+            except (ValueError, KeyError, TypeError) as e:
+                print(f"Invalid quantity or price for row: {row}")
+                continue
+
+            date = row.get('date', 'Unknown')
 
             record_count += 1
             total_quantity += quantity
@@ -60,7 +71,48 @@ try:
 
             # Process the data as needed
             print(f"Product: {product}, Quantity: {quantity}, Price: {price}, Date: {date}")
-        
+
+    print('--------------------------------------')
+    print(f"Total Sales: ${total_sales:.2f}")
+    print('--------------------------------------')
+
+    # Find the most sold product
+    most_sold_product = max(product_sales, key=product_sales.get)
+
+    print('--------------------------------------')
+    print(f"Most Sold Product: {most_sold_product} with {product_sales[most_sold_product]} units sold.")
+    print('--------------------------------------')
+
+    #Generate sales report by product
+
+    print('--------------------------------------')
+    print("Sales Report by Product:")  
+    for product, sales in product_sales.items():
+        print(f"{product}: {sales} units sold")
+    print('--------------------------------------')
+
+    # Find the most profitable product
+    most_profitable_product = max(product_revenue, key=product_revenue.get)
+
+    #prints the most profitable product
+    print('--------------------------------------')
+    print(f"Most Profitable Product: {most_profitable_product} with revenue of ${product_revenue[most_profitable_product]:.2f}")
+    print('--------------------------------------')
+
+    #generates sales report by date
+    print('--------------------------------------')
+    print("Sales Report by Date:")
+    for date, sales in date_sales.items():
+        print(f"{date}: ${sales:.2f}")
+    print('--------------------------------------')
+
+    print('--------------------------------------')
+    print(f"Customer Count: {record_count}")
+    print('--------------------------------------')
+
+    print('--------------------------------------')
+    print(f"Total Units Sold: {total_quantity}")
+    print('--------------------------------------')      
 
 except urllib.error.URLError as e:
     print("Error fetching URL:", e)
@@ -69,44 +121,3 @@ except urllib.error.HTTPError as e:
 except Exception as e:
     print("An unexpected error occurred:", e)
 
-print('--------------------------------------')
-print(f"Total Sales: ${total_sales:.2f}")
-print('--------------------------------------')
-
-# Find the most sold product
-most_sold_product = max(product_sales, key=product_sales.get)
-
-print('--------------------------------------')
-print(f"Most Sold Product: {most_sold_product} with {product_sales[most_sold_product]} units sold.")
-print('--------------------------------------')
-
-#Generate sales report by product
-
-print('--------------------------------------')
-print("Sales Report by Product:")  
-for product, sales in product_sales.items():
-    print(f"{product}: {sales} units sold")
-print('--------------------------------------')
-
-# Find the most profitable product
-most_profitable_product = max(product_revenue, key=product_revenue.get)
-
-#prints the most profitable product
-print('--------------------------------------')
-print(f"Most Profitable Product: {most_profitable_product} with revenue of ${product_revenue[most_profitable_product]:.2f}")
-print('--------------------------------------')
-
-#generates sales report by date
-print('--------------------------------------')
-print("Sales Report by Date:")
-for date, sales in date_sales.items():
-    print(f"{date}: ${sales:.2f}")
-print('--------------------------------------')
-
-print('--------------------------------------')
-print(f"Customer Count: {record_count}")
-print('--------------------------------------')
-
-print('--------------------------------------')
-print(f"Total Units Sold: {total_quantity}")
-print('--------------------------------------')
